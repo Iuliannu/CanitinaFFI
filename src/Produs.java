@@ -19,6 +19,14 @@ public class Produs {
         return numarProduse;
     }
 
+    public void setPret(double pret) {
+        if (pret > 0) {
+            this.pret = pret;
+        } else {
+            System.out.println("Pret invalid: se accepta doar valori pozitive");
+        }
+    }
+
     public double costPentru(int portii) {
         return pret * portii;
     }

@@ -144,6 +144,32 @@ public class Cantina {
         System.out.printf("Total fara reducere: %.2f lei%n", total);
     }
 
+    static void majoreazaPret(double pret) {
+        pret = pret * 1.10;
+        System.out.printf("  in metoda (copia):  %.2f lei%n", pret);
+    }
+
+    static void majoreazaPret(Produs p) {
+        p.setPret(p.getPret() * 1.10);
+        System.out.printf("  in metoda (obiect): %.2f lei%n", p.getPret());
+    }
+
+    static void demonstreazaTransmiterea() {
+        double pret = 24.50;
+        System.out.printf("double pret inainte: %.2f lei%n", pret);
+        majoreazaPret(pret);
+        System.out.printf("double pret dupa:    %.2f lei%n", pret);
+
+        Produs zeama = PRODUSE[0];
+        double initial = zeama.getPret();
+        System.out.printf("Produs zeama inainte: %.2f lei%n", zeama.getPret());
+        majoreazaPret(zeama);
+        System.out.printf("Produs zeama dupa:    %.2f lei%n", zeama.getPret());
+        zeama.setPret(-5);
+        System.out.printf("Dupa setPret(-5):     %.2f lei%n", zeama.getPret());
+        zeama.setPret(initial); // readucem pretul din meniu la valoarea initiala
+    }
+
     static void afiseazaMeniuPrincipal() {
         System.out.println();
         System.out.println("=== CANTINA FFI ===");
@@ -151,6 +177,7 @@ public class Cantina {
         System.out.println("2 - Comanda de maximum 5 pozitii");
         System.out.println("3 - Tabelul costurilor (zeama)");
         System.out.println("4 - Calcul cost cu TVA");
+        System.out.println("5 - Transmiterea parametrilor (majorare pret)");
         System.out.println("0 - Iesire");
         System.out.print("Alegerea: ");
     }
@@ -168,6 +195,7 @@ public class Cantina {
                 case 2 -> comandaMaxim5(sc);
                 case 3 -> afiseazaTabelCosturi(pretProdus(1));
                 case 4 -> demonstreazaCosturi();
+                case 5 -> demonstreazaTransmiterea();
                 case 0 -> System.out.println("La revedere!");
                 default -> System.out.println("Optiune inexistenta");
             }
