@@ -5,6 +5,13 @@ public class Cantina {
     static final double PRAG_REDUCERE = 100.0;
     static final double REDUCERE = 0.15;
     static final double TVA = 0.20;
+    static int numarBonuri = 0;
+    static final Produs[] PRODUSE = {
+        new Produs("Zeama de casa", 24.50, 20),
+        new Produs("Piure cu parjoala", 46.00, 30),
+        new Produs("Salata de varza", 18.00, 25),
+        new Produs("Compot", 12.00, 40)
+    };
 
     static void afiseazaMeniu() {
         System.out.println("=== MENIUL ZILEI ===");
@@ -16,13 +23,10 @@ public class Cantina {
     }
 
     static double pretProdus(int optiune) {
-        return switch (optiune) {
-            case 1 -> 24.50;
-            case 2 -> 46.00;
-            case 3 -> 18.00;
-            case 4 -> 12.00;
-            default -> 0;
-        };
+        if (optiune >= 1 && optiune <= PRODUSE.length) {
+            return PRODUSE[optiune - 1].getPret();
+        }
+        return 0;
     }
 
     static double aplicaReducere(double total) {
@@ -42,11 +46,6 @@ public class Cantina {
             }
         } while (optiune != 0);
         return total;
-    }
-
-    static void afiseazaRezumat(double total) {
-        System.out.printf("Total: %.2f lei%n", total);
-        System.out.printf("De plata: %.2f lei%n", aplicaReducere(total));
     }
 
     static void afiseazaTabelCosturi(double pret) {
@@ -96,7 +95,14 @@ public class Cantina {
         }
         afiseazaMeniu();
         double total = citesteComanda(sc);
-        afiseazaRezumat(total);
+        afiseazaBon(total, aplicaReducere(total));
+    }
+
+    static void afiseazaBon(double total, double dePlata) {
+        numarBonuri++;
+        System.out.println("===== Bon nr. " + numarBonuri + " =====");
+        System.out.printf("Total: %.2f lei%n", total);
+        System.out.printf("De plata: %.2f lei%n", dePlata);
     }
 
     static void comandaMaxim5(Scanner sc) {
@@ -131,6 +137,7 @@ public class Cantina {
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
+        System.out.println("Produse in meniu: " + Produs.getNumarProduse());
         int alegere;
         do {
             afiseazaMeniuPrincipal();

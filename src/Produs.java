@@ -1,4 +1,5 @@
 public class Produs {
+    private static int numarProduse = 0;
     private String denumire;
     private double pret;
     private int stoc;
@@ -7,11 +8,16 @@ public class Produs {
         this.denumire = denumire;
         this.pret = pret;
         this.stoc = stoc;
+        numarProduse++;
     }
 
     public String getDenumire() { return denumire; }
     public double getPret() { return pret; }
     public int getStoc() { return stoc; }
+
+    public static int getNumarProduse() {
+        return numarProduse;
+    }
 
     public double costPentru(int portii) {
         return pret * portii;
