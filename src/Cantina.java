@@ -48,11 +48,19 @@ public class Cantina {
         System.out.printf("De plata: %.2f lei%n", aplicaReducere(total));
     }
 
+    static void afiseazaTabelCosturi(double pret) {
+        System.out.println("Portii | Cost");
+        for (int portii = 1; portii <= 5; portii++) {
+            System.out.printf("%6d | %.2f lei%n", portii, pret * portii);
+        }
+    }
+
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
         afiseazaMeniu();
         double total = citesteComanda(sc);
         afiseazaRezumat(total);
+        afiseazaTabelCosturi(pretProdus(1));
     }
 }
