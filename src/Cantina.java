@@ -99,11 +99,50 @@ public class Cantina {
         afiseazaRezumat(total);
     }
 
+    static void comandaMaxim5(Scanner sc) {
+        afiseazaMeniu();
+        double total = 0;
+        for (int i = 1; i <= 5; i++) {
+            System.out.print("Pozitia " + i + " din 5: ");
+            int optiune = sc.nextInt();
+            if (optiune == 0) {
+                break;
+            }
+            if (optiune < 1 || optiune > 4) {
+                System.out.println("Optiune inexistenta");
+                continue;
+            }
+            total += pretProdus(optiune);
+        }
+        System.out.printf("Total fara reducere: %.2f lei%n", total);
+    }
+
+    static void afiseazaMeniuPrincipal() {
+        System.out.println();
+        System.out.println("=== CANTINA FFI ===");
+        System.out.println("1 - Comanda completa (orar, do-while, bon)");
+        System.out.println("2 - Comanda de maximum 5 pozitii");
+        System.out.println("3 - Tabelul costurilor (zeama)");
+        System.out.println("4 - Calcul cost cu TVA");
+        System.out.println("0 - Iesire");
+        System.out.print("Alegerea: ");
+    }
+
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
-        comandaCompleta(sc);
-        afiseazaTabelCosturi(pretProdus(1));
-        demonstreazaCosturi();
+        int alegere;
+        do {
+            afiseazaMeniuPrincipal();
+            alegere = sc.nextInt();
+            switch (alegere) {
+                case 1 -> comandaCompleta(sc);
+                case 2 -> comandaMaxim5(sc);
+                case 3 -> afiseazaTabelCosturi(pretProdus(1));
+                case 4 -> demonstreazaCosturi();
+                case 0 -> System.out.println("La revedere!");
+                default -> System.out.println("Optiune inexistenta");
+            }
+        } while (alegere != 0);
     }
 }
