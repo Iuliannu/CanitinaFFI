@@ -6,6 +6,8 @@ public class Cantina {
     static final double REDUCERE = 0.15;
     static final double TVA = 0.20;
     static int numarBonuri = 0;
+    static final int NUMAR_NOROCOS = 7;
+    static final double PRET_COMPOT = 12.00;
     static final Produs[] PRODUSE = {
         new Produs("Zeama de casa", 24.50, 20),
         new Produs("Piure cu parjoala", 46.00, 30),
@@ -95,7 +97,13 @@ public class Cantina {
         }
         afiseazaMeniu();
         double total = citesteComanda(sc);
-        afiseazaBon(total, aplicaReducere(total));
+        double dePlata = aplicaReducere(total);
+
+        int numar = genereazaNumar(1, 10);
+        System.out.println("Numarul norocos generat: " + numar);
+        dePlata = aplicaZiuaNorocoasa(dePlata, numar);
+
+        afiseazaBon(total, dePlata);
     }
 
     static void afiseazaBon(double total, double dePlata) {
@@ -103,6 +111,19 @@ public class Cantina {
         System.out.println("===== Bon nr. " + numarBonuri + " =====");
         System.out.printf("Total: %.2f lei%n", total);
         System.out.printf("De plata: %.2f lei%n", dePlata);
+    }
+
+    static int genereazaNumar(int min, int max) {
+        return min + (int) (Math.random() * (max - min + 1));
+    }
+
+    static double aplicaZiuaNorocoasa(double suma, int numar) {
+        if (numar == NUMAR_NOROCOS) {
+            System.out.println("Ziua norocoasa! Compotul este gratuit.");
+            suma = suma - PRET_COMPOT;
+        }
+        suma = Math.max(0, suma);
+        return Math.round(suma * 100) / 100.0;
     }
 
     static void comandaMaxim5(Scanner sc) {
