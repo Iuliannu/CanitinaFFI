@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Cantina {
     static final double PRAG_REDUCERE = 100.0;
     static final double REDUCERE = 0.15;
+    static final double TVA = 0.20;
 
     static void afiseazaMeniu() {
         System.out.println("=== MENIUL ZILEI ===");
@@ -60,6 +61,30 @@ public class Cantina {
                 || (ziua == 6 && ora >= 9 && ora < 13);
     }
 
+    static double calculeazaCost(double pret, int portii) {
+        return pret * portii * (1 + TVA);
+    }
+
+    static double calculeazaCost(double pret, int portii, boolean bursier) {
+        double baza = pret * portii;
+        if (bursier) {
+            baza = baza * (1 - REDUCERE);
+        }
+        return baza * (1 + TVA);
+    }
+
+    static double calculeazaCost(Produs p, int portii) {
+        return calculeazaCost(p.getPret(), portii);
+    }
+
+    static void demonstreazaCosturi() {
+        Produs piure = new Produs("Piure cu parjoala", 46.00, 30);
+        System.out.printf("2 x piure, cu TVA:               %.2f lei%n", calculeazaCost(46.00, 2));
+        System.out.printf("2 x piure, bursier, cu TVA:      %.2f lei%n", calculeazaCost(46.00, 2, true));
+        System.out.printf("2 x piure (obiect Produs):       %.2f lei%n", calculeazaCost(piure, 2));
+        System.out.printf("calculeazaCost(46, 2) cu int:    %.2f lei%n", calculeazaCost(46, 2));
+    }
+
     static void comandaCompleta(Scanner sc) {
         System.out.print("Ziua (1 - luni ... 7 - duminica): ");
         int ziua = sc.nextInt();
@@ -79,5 +104,6 @@ public class Cantina {
         Scanner sc = new Scanner(System.in);
         comandaCompleta(sc);
         afiseazaTabelCosturi(pretProdus(1));
+        demonstreazaCosturi();
     }
 }
