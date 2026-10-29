@@ -55,12 +55,29 @@ public class Cantina {
         }
     }
 
-    public static void main(String[] args) {
-        Locale.setDefault(Locale.US);
-        Scanner sc = new Scanner(System.in);
+    static boolean esteDeschis(int ziua, int ora) {
+        return (ziua >= 1 && ziua <= 5 && ora >= 8 && ora < 16)
+                || (ziua == 6 && ora >= 9 && ora < 13);
+    }
+
+    static void comandaCompleta(Scanner sc) {
+        System.out.print("Ziua (1 - luni ... 7 - duminica): ");
+        int ziua = sc.nextInt();
+        System.out.print("Ora (0-23): ");
+        int ora = sc.nextInt();
+        if (!esteDeschis(ziua, ora)) {
+            System.out.println("Cantina este inchisa. Comenzile nu se accepta.");
+            return;
+        }
         afiseazaMeniu();
         double total = citesteComanda(sc);
         afiseazaRezumat(total);
+    }
+
+    public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
+        Scanner sc = new Scanner(System.in);
+        comandaCompleta(sc);
         afiseazaTabelCosturi(pretProdus(1));
     }
 }
